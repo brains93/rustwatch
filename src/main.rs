@@ -2,8 +2,8 @@ extern crate pcap;
 mod rule_parser;
 use rule_parser::{parse_snort_rule, SnortRule};
 
-// mod network_capture;
-// use network_capture::get_traffic;
+mod network_capture;
+use network_capture::get_traffic;
 
 fn main() {
     let snort_rules = vec![
@@ -17,4 +17,7 @@ fn main() {
             Err(err) => eprintln!("Error parsing rule: {}", err),
         }
     }
+    
+    get_traffic()
+
 }
