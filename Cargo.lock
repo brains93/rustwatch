@@ -73,6 +73,7 @@ name = "rustwatch"
 version = "0.1.0"
 dependencies = [
  "pcap",
+ "regex",
 ]
 
 [[package]]
