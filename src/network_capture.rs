@@ -1,10 +1,11 @@
+
 use pcap::{Capture, Device};
 use std::env;
 use std::process;
 use std::net::{Ipv4Addr, IpAddr};
+use crate::rule_parser::SnortRule;
 
-
-pub fn get_traffic() {
+pub fn get_traffic(rule_list: &[SnortRule]) {
     // Get the network interface as a command-line argument
     let args: Vec<String> = env::args().collect();
     if args.len() != 2 {
@@ -41,15 +42,22 @@ pub fn get_traffic() {
         });
 
     // Process packets
+    // this is where I need to do filtering shit
     loop {
         match capture.next() {
             Ok(packet) => {
                 let data = packet.data;
                 if let Some((src_ip, dst_ip, src_port, dst_port)) = parse_packet_headers(data) {
-                    println!("Source IP: {}, Source Port: {}", src_ip, src_port);
-                    println!("Destination IP: {}, Destination Port: {}", dst_ip, dst_port);
+                    for rule in rule_list {
+                        if rule.src_ip == src_ip.to_string() || rule.src_ip == "any" && rule.src_port == src_port.to_string() || rule.dst_ip == "any" && rule.dst_ip == src_port.to_string() {
+                            println!("Source IP: {}, Source Port: {}", src_ip, src_port);
+                            println!("Destination IP: {}, Destination Port: {}", dst_ip, dst_port);
+                            print_packet_data(data);
+
+                        }
+                    }
+                  
                 }
-                print_packet_data(data);
             }
             Err(err) => {
                 eprintln!("Error capturing packet: {}", err);

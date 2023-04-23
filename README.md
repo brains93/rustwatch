@@ -2,7 +2,7 @@
 rust based IDS system
 
 This is a project I am doing to learn rust, do not use this as a guide of rust best practive (or even coding best practice) I am very new to Rust and this is a learning experiance. Feedback and pointers are welcome 
-Currently it is able to capture traffic on a network interface and print it onto the screen
+Currently it is able to capture traffic on a given network interface and print it onto the screen
 <img width="543" alt="image" src="https://user-images.githubusercontent.com/60553334/230187890-8b782dfd-c95d-45eb-9f5a-c5c63435cc75.png">
 
 
